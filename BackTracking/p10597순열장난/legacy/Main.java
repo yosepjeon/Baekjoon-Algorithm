@@ -1,4 +1,4 @@
-package BackTracking.p10597순열장난;
+package BackTracking.p10597순열장난.legacy;
 
 import java.util.HashMap;
 import java.util.Map;

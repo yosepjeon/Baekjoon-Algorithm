@@ -1,4 +1,4 @@
-package BackTracking.p1799비숍;
+package BackTracking.p1799비숍.legacy;
 
 import java.util.Iterator;
 import java.util.LinkedList;

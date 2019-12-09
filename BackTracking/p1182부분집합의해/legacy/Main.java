@@ -1,4 +1,4 @@
-package BackTracking.p1182부분집합의해;
+package BackTracking.p1182부분집합의해.legacy;
 
 import java.util.List;
 import java.util.ArrayList;

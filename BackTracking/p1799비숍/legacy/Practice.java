@@ -1,4 +1,4 @@
-package BackTracking.p1799비숍;
+package BackTracking.p1799비숍.legacy;
 
 public class Practice {
 	public static void main(String[] args ) {

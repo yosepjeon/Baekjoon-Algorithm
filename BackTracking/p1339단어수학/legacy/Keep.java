@@ -1,4 +1,4 @@
-package BackTracking.p1339단어수학;
+package BackTracking.p1339단어수학.legacy;
 
 import java.util.Scanner;
 

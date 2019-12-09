@@ -1,4 +1,4 @@
-package BackTracking.p1405미친로봇;
+package BackTracking.p1405미친로봇.legacy;
 
 import java.util.Scanner;
 
