@@ -1,4 +1,4 @@
-package BackTracking.p2023신기한소수;
+package BackTracking.p2023신기한소수.legacy;
 
 public class Practice {
 	public static void main(String[] args ) {

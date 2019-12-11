@@ -1,4 +1,4 @@
-package BackTracking.p2580스도쿠;
+package BackTracking.p2580스도쿠.legacy;
 
 import java.util.Deque;
 import java.util.LinkedList;

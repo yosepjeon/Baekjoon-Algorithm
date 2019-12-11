@@ -1,4 +1,4 @@
-package BackTracking.p2629양팔저울;
+package BackTracking.p2629양팔저울.legacy;
 
 import java.util.Comparator;
 import java.util.HashSet;

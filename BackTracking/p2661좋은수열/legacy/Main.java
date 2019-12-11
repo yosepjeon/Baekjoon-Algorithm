@@ -1,4 +1,4 @@
-package BackTracking.p2661좋은수열;
+package BackTracking.p2661좋은수열.legacy;
 
 import java.math.BigInteger;
 import java.util.Scanner;

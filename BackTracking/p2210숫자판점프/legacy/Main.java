@@ -1,4 +1,4 @@
-package BackTracking.p2210숫자판점프;
+package BackTracking.p2210숫자판점프.legacy;
 
 import java.util.HashMap;
 import java.util.Map;
