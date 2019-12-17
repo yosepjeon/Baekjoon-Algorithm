@@ -10,33 +10,52 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scr = new Scanner(System.in);
+		StringBuffer sb = new StringBuffer();
 
 		String input;
+//		int T = scr.nextInt();
+//		for (int a = 0; a < T; a++) {
+			result = Integer.MAX_VALUE;
+			N = scr.nextInt();
+			M = scr.nextInt();
+			scr.nextLine();
 
-		N = scr.nextInt();
-		M = scr.nextInt();
-		scr.nextLine();
+			map = new char[N][M];
 
-		map = new char[N][M];
-
-		for (int i = 0; i < N; i++) {
-			input = scr.next();
-			map[i] = input.toCharArray();
-		}
-
-		for (int i = 0; i <= N - 8; i++) {
-			for (int j = 0; j <= M - 8; j++) {
-				copyMap = new int[8][8];
-				copy(j, i);
-				copyMap[i][j] = 0;
-				paintBoard(0);
-				copy(j, i);
-				copyMap[i][j] = copyMap[0][0] + 1 % 2;
-				paintBoard(0);
+			for (int i = 0; i < N; i++) {
+				// input = scr.next();
+				input = scr.nextLine();
+				map[i] = input.toCharArray();
 			}
-		}
 
-		System.out.println(result);
+			for (int i = 0; i <= N - 8; i++) {
+				for (int j = 0; j <= M - 8; j++) {
+					copyMap = new int[8][8];
+					copy(j, i);
+
+					// if (copyMap[i][j] == 0) {
+					// copyMap[i][j] = 1;
+					// paintBoard(1);
+					// copy(j, i);
+					// paintBoard(0);
+					// } else {
+					// copyMap[i][j] = 0;
+					// paintBoard(1);
+					// copy(j,i);
+					// paintBoard(0);
+					// }
+
+					copyMap[0][0] = (copyMap[0][0] + 1) % 2;
+					paintBoard(1);
+					copy(j, i);
+					paintBoard(0);
+				}
+			}
+//			sb.append(result + "\n");
+			System.out.println(result);
+//		}
+		
+//		System.out.println(sb.toString());
 	}
 
 	public static void copy(int x, int y) {
@@ -46,52 +65,53 @@ public class Main {
 		for (int i = y; i < height; i++) {
 			for (int j = x; j < width; j++) {
 				if (map[i][j] == 'W') {
-					copyMap[i - y][j - x] = 1; // 0은 Black
+					copyMap[i - y][j - x] = 1; // 1은 White
 				} else {
-					copyMap[i - y][j - x] = 0; // 1은 White
+					copyMap[i - y][j - x] = 0; // 0은 Black
 				}
-
-				// System.out.print(copyMap[i-y][j-x]);
 			}
-			// System.out.println();
 		}
 	}
 
 	public static void paintBoard(int count) {
+		for (int j = 0; j < 7; j++) {
+
+			if (copyMap[j][0] == copyMap[j + 1][0]) {
+				// System.out.println(copyMap[j][0] + ", " + copyMap[j + 1][0]);
+				copyMap[j + 1][0] = (copyMap[j + 1][0] + 1) % 2;
+				count++;
+			}
+
+			if (count > result) {
+				return;
+			}
+		}
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 7; j++) {
 				if (copyMap[i][j] == copyMap[i][j + 1]) {
-					copyMap[i][j + 1] = copyMap[i][j] + 1 % 2;
+					copyMap[i][j + 1] = (copyMap[i][j + 1] + 1) % 2;
 					count++;
 				}
 
-				if (copyMap[j][i] == copyMap[j + 1][i]) {
-					copyMap[j + 1][i] = copyMap[j][i] + 1 % 2;
-					count++;
+				if (count > result) {
+					return;
 				}
 			}
 		}
-		
-//		for (int i = 0; i < 8; i++) {
-//			for (int j = 0; j < 7; j++) {
-//				
-//
-//				if (copyMap[j][i] == copyMap[j + 1][i]) {
-//					copyMap[j + 1][i] = copyMap[j][i] + 1 % 2;
-//					count++;
-//					// if (copyMap[j][i] == 'B') {
-//					// copyMap[j + 1][i] = 'W';
-//					// result++;
-//					// } else {
-//					// copyMap[j + 1][i] = 'B';
-//					// result++;
-//					// }
-//				}
-//			}
-//		}
-		
+
 		if (count < result) {
 			result = count;
 		}
 	}
 }
+
+// 8 9
+// BWBWBWBWB
+// WBWBWBWBB
+// BWBWBWBWB
+// WBWBWBWBB
+// BWBWBWBWB
+// WBWBWBWBB
+// BWBWBWBWB
+// WBWBWBWBB
