@@ -3,71 +3,91 @@ package dfs.p9466텀프로젝트;
 import java.util.Scanner;
 
 public class Main {
-	static int T;
-	static int n;
-	static int[] students;
-	static boolean[] visited;
-	static boolean[] checkIsTeamMember;
-	static int result = 0;
-
-	static StringBuffer sb = new StringBuffer();
-
 	public static void main(String[] args) {
 		Scanner scr = new Scanner(System.in);
+		int T;
+		int n;
+		Student[] students;
+		StringBuffer sb = new StringBuffer();
+		int count = 0;
 
 		T = scr.nextInt();
-
-		for (int i = 1; i <= T; i++) {
+		for (int i = 0; i < T; i++) {
 			n = scr.nextInt();
-			students = new int[n + 1];
-			checkIsTeamMember = new boolean[n+1];
-			result = 0;
+			students = new Student[n + 1];
+			count = 0;
 
 			for (int j = 1; j <= n; j++) {
-				students[j] = scr.nextInt();
+				int want = scr.nextInt();
+				students[j] = new Student(j, want);
 			}
 
 			for (int j = 1; j <= n; j++) {
-				visited = new boolean[n + 1];
-				if (j != students[j]) {
-					visited[j] = true;
-					dfs(j, j,students[j]);
-//					dfs(j);
-				}else {
-					checkIsTeamMember[j] = true;
+				if (!students[j].isVisited) {
+					students[j].isVisited = true;
+					if (dfs(j, j, students[j].want, students, n)) {
+						students[j].result = 1;
+					} else {
+						students[j].result = -1;
+					}
 				}
 			}
-			
-			for(int j = 1;j<= n;j++) {
-				if(!checkIsTeamMember[j])
-					result++;
-			}
 
-			sb.append(result + "\n");
+			for (int j = 1; j <= n; j++) {
+//				System.out.print(students[j].result + " ");
+				if (students[j].result == -1)
+					count++;
+			}
+//			System.out.println();
+
+			 sb.append(count + "\n");
 		}
 
-		System.out.println(sb.toString());
+		 System.out.println(sb.toString());
 	}
 
-	public static void dfs(int root, int my, int partner) {
-		if(root == students[partner] && !visited[partner]) {
-			checkIsTeamMember[root] = true;
-			return;
-		}else {
-			if(!visited[partner] && !checkIsTeamMember[partner]){
-				visited[partner] = true;
-				dfs(root, partner, students[partner]);
-			}else {
-				return;
+	public static boolean dfs(int root, int start, int end, Student[] students, int totalStudents) {
+//		System.out.println("root: " + root + "start: " + start + " end: " + end);
+
+		if (root == end) {
+			return true;
+		}
+
+		if (students[end].isVisited) {
+			return false;
+		}
+
+		if (start == end) {
+			return false;
+		}
+
+		// for (int i = 1; i <= totalStudents; i++) {
+		if (!students[end].isVisited) {
+			students[end].isVisited = true;
+			if (dfs(root, students[end].id, students[end].want, students, totalStudents)) {
+				students[end].result = 1;
+				return true;
+			} else {
+				students[end].result = -1;
+				students[end].isVisited = false;
+				return false;
 			}
 		}
+		// }
+		return false;
 	}
 }
 
-class Element {
-	
-}
+class Student {
+	int id;
+	int want;
+	int result;
+	boolean isVisited;
 
-//1
-//3
-//2 3 2
+	public Student(int id, int want) {
+		this.id = id;
+		this.want = want;
+		this.result = 0;
+		this.isVisited = false;
+	}
+}
