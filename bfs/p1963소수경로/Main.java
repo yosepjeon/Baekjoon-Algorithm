@@ -1,8 +1,10 @@
 package bfs.p1963소수경로;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -16,6 +18,7 @@ public class Main {
 		Scanner scr = new Scanner(System.in);
 
 		boolean[] notPrimeList = new boolean[10000];
+		Map<String, PrimeNumber> primeMap = new HashMap<String, PrimeNumber>();
 		
 		notPrimeList[1] = true;
 
@@ -39,7 +42,9 @@ public class Main {
 
 		for (int i = 1000; i < 10000; i++) {
 			if (!notPrimeList[i]) {
+				String prime = String.valueOf(i);
 				list.add(new PrimeNumber(String.valueOf(i)));
+				primeMap.put(prime, new PrimeNumber(prime));
 //				System.out.println(i);
 			}
 		}
@@ -51,64 +56,63 @@ public class Main {
 			String prime1 = scr.next();
 			String prime2 = scr.next();
 			result = Integer.MAX_VALUE;
-
+			
+			PrimeNumber pn = primeMap.get(prime1);
+			bfs(prime1, prime2, pn,list);
+			
 //			for(PrimeNumber pn : list) {
 //				if(pn.value.equals(prime1)) {
 //					pn.isVisited = true;
-//					dfs(pn.value, prime2, list, 0);
+//					bfs(pn.value, prime2, pn);
 //					pn.isVisited = false;
 //					break;
 //				}
 //			}
 			
-			for(PrimeNumber pn : list) {
-				if(pn.value.equals(prime1)) {
-					pn.isVisited = true;
-					bfs(pn.value, prime2, pn);
-					pn.isVisited = false;
-					break;
-				}
-			}
-			
 			if(result == Integer.MAX_VALUE) 
-				sb.append("Impossible");
+				sb.append("Impossible\n");
 			else
-				sb.append(result);
+				sb.append(result + "\n");
+			
+			initPrimeList(list);
 		}
 		
 		System.out.println(sb.toString());
 	}
 	
-	public static void bfs(String prime1, String prime2,PrimeNumber primeNumber) {
+	public static void bfs(String prime1, String prime2,PrimeNumber primeNumber,List<PrimeNumber> pnList) {
 		Queue<PrimeNumber> queue = new LinkedList<>();
-		
+		primeNumber.isVisited = true;
 		queue.add(primeNumber);
 		
 		while(!queue.isEmpty()) {
-			PrimeNumber pn = queue.poll();
+			PrimeNumber element = queue.poll();
+//			System.out.println("prime{value: " + element.value + " count: " + element.count);
+			if(element.value.equals(prime2)) {
+//				result = pn.
+				result = element.count;
+				return;
+			}
 			
-			
+			for(PrimeNumber pn : pnList) {
+				if(pn.isVisited)
+					continue;
+				int count = element.matchingOtherPrimeNumber(pn.value);
+				
+				if(count < 3) {
+					continue;
+				}else {
+					pn.isVisited = true;
+					pn.count = element.count + 1;
+					queue.add(pn);
+				}
+			}
 		}
 	}
-
-	public static void dfs(String prime1, String prime2, List<PrimeNumber> list, int count) {
-		if(result <= count)
-			return;
-		
-		if (prime1.equals(prime2)) {
-			System.out.println(count);
-			if(result > count)
-				result = count;
-			flag = true;
-			return;
-		}
-		
-		for(PrimeNumber pn : list) {
-			if(!pn.isVisited && pn.matchingOtherPrimeNumber(prime1) >= 3) {
-				pn.isVisited = true;
-				dfs(pn.value,prime2,list,count+1);
-				pn.isVisited = false;
-			}
+	
+	public static void initPrimeList(List<PrimeNumber> list) {
+		for(PrimeNumber element : list) {
+			element.isVisited = false;
 		}
 	}
 }
@@ -116,10 +120,12 @@ public class Main {
 class PrimeNumber {
 	String value;
 	boolean isVisited;
+	int count;
 
 	public PrimeNumber(String value) {
 		this.value = value;
 		this.isVisited = false;
+		this.count = 0;
 	}
 
 	public int matchingOtherPrimeNumber(String primeNumber) {
