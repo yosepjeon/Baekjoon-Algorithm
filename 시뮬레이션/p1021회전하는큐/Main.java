@@ -1,115 +1,93 @@
 package 시뮬레이션.p1021회전하는큐;
 
-import java.util.Deque;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
-	static int N, M;
-	static int[] goalIndex;
-	static boolean[] checkGetElements;
-	static int result = Integer.MAX_VALUE;
-	static Deque<Integer> dq = new LinkedList<>();
+	static int count = 0;
 
 	public static void main(String[] args) {
+		LinkedList<Integer> circularQueue = new LinkedList<>();
+
 		Scanner scr = new Scanner(System.in);
 
-		Deque<Integer> tempdq;
+		int N = scr.nextInt();
+		int M = scr.nextInt();
+		boolean[] values = new boolean[N + 1];
 
-		N = scr.nextInt();
-		M = scr.nextInt();
-
-		goalIndex = new int[M + 1];
-		checkGetElements = new boolean[N + 1];
+		for (int i = 0; i < N; i++) {
+			circularQueue.add(i + 1);
+		}
 
 		for (int i = 1; i <= M; i++) {
-			goalIndex[i] = scr.nextInt();
+			int checkValue = scr.nextInt();
+			count += doIt(circularQueue, circularQueue.size(), checkValue);
 		}
 
-		for (int i = 1; i <= N; i++) {
-			dq.addLast(i);
-		}
-		
-		System.out.println(dq);
-
-		for (int i = 1; i <= 3; i++) {
-			if(i == 1){
-				run(0, i, 0);
-			}
-			
-			if(i == 2) {
-				run(1,i,0);
-			}
-			
-			if(i == 3) {
-				run(1,i,0);
-			}
-		}
-		
-		System.out.println(result);
+		System.out.println(count);
 	}
 
-	public static void run(int count, int select, int getCount) {
-		int cnt = getCount;
-		int elem = 0;
+	public static int doIt(LinkedList<Integer> circularQueue, int queueSize, int checkValue) {
+		int leftValue = checkLeft(circularQueue, queueSize, checkValue);
+		int rightValue = checkRight(circularQueue, queueSize, checkValue);
 
-		if (result <= count) {
-//			System.out.println("result: " + result + " count: " + count);
-//			System.out.println("return");
-			return;
+		boolean direction = leftValue < rightValue ? true : false;
+
+		if (direction) {
+			return rotateRight(circularQueue, leftValue);
 		} else {
-			if (getCount == goalIndex.length-1) {
-				System.out.println("goalIndex.length: " + goalIndex.length);
-				if (result >= count) {
-					result = count;
-				}
-				return;
-			} else {
-				switch (select) {
-				case 1:
-//					System.out.println(dq);
-					System.out.println("cnt: " + cnt);
-					elem = dq.pollFirst();
-
-//					for (int i = 1; i <= M; i++) {
-//						if (elem == goalIndex[i]) {
-//							System.out.println(elem);
-//							cnt++;
-//							break;
-//						}
-//					}
-					
-					
-					break;
-				case 2:
-					elem = dq.pollFirst();
-					dq.addLast(elem);
-					break;
-				case 3:
-					elem = dq.pollLast();
-					dq.addFirst(elem);
-					break;
-				}
-
-				for (int i = 1; i <= 3; i++) {
-					if(i == 1) {
-						run(count, i, cnt);
-						dq.addFirst(elem);
-						System.out.println("select1: " + dq);
-					}else if(i == 2) {
-						run(count+1, i, cnt);
-						elem = dq.pollLast();
-						dq.addFirst(elem);
-						System.out.println("select2: " + dq);
-					}else if(i == 3) {
-						run(count+1, i, cnt);
-						elem = dq.pollFirst();
-						dq.addLast(elem);
-						System.out.println("select3" +dq);
-					}
-				}
-			}
+			return rotateLeft(circularQueue, rightValue);
 		}
+	}
+
+	public static int checkLeft(LinkedList<Integer> circularQueue, int queueSize, int checkValue) {
+		int count = 1;
+
+		if (circularQueue.get(0) == checkValue)
+			return 0;
+
+		for (int i = queueSize - 1; i >= 0; i--) {
+			if (circularQueue.get(i) == checkValue)
+				return count;
+
+			count++;
+		}
+
+		return -1;
+	}
+
+	public static int checkRight(LinkedList<Integer> circularQueue, int queueSize, int checkValue) {
+		int count = 0;
+
+		for (int i = 0; i < queueSize; i++) {
+			if (circularQueue.get(i) == checkValue)
+				return count;
+
+			count++;
+		}
+
+		return -1;
+	}
+
+	public static int rotateLeft(LinkedList<Integer> circularQueue, int value) {
+		for (int i = 0; i < value; i++) {
+			int v = circularQueue.pollFirst();
+			circularQueue.addLast(v);
+		}
+		
+		circularQueue.poll();
+		
+		return value;
+	}
+
+	public static int rotateRight(LinkedList<Integer> circularQueue, int value) {
+		for (int i = 0; i < value; i++) {
+			int v = circularQueue.pollLast();
+			circularQueue.addFirst(v);
+		}
+		
+		circularQueue.poll();
+		
+		return value;
 	}
 }

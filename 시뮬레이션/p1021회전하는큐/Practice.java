@@ -8,15 +8,23 @@ public class Practice {
 	public static void main(String[] args ) {
 		Scanner scr = new Scanner(System.in);
 		int elem;
-		Deque<Integer> dq = new LinkedList<>();
+		LinkedList<Integer> list = new LinkedList<>();
 		
 		for(int i=1;i<=10;i++) {
-			dq.addLast(i);
+			list.addLast(i);
 		}
 		
-		elem = dq.pollFirst();
-		dq.addLast(elem);
+		for(int i=10;i%10>=0;i--) {
+			System.out.println(list.get(i%10));
+		}
 		
-		System.out.println(dq.peekFirst());
+//		list.forEach((element) -> {
+//			if(element%2 == 0)
+//				list.remove(element);
+//		});
+//		
+//		list.forEach((element) -> {
+//			System.out.println(element);
+//		});
 	}
 }
