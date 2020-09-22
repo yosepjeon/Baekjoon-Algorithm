@@ -1,4 +1,4 @@
-package 그래프이론.p1753최단경로;
+package 그래프이론.p1753최단경로.legacy;
 
 //import java.util.*;
 //
