@@ -1,4 +1,4 @@
-package 그래프이론.mst.p1922네트워크연결;
+package 그래프이론.mst.p1922네트워크연결.크루스칼;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,10 +83,6 @@ public class Main {
         edges.sort((Edge edge1, Edge edge2) -> edge1.value - edge2.value);
 
         int total = 0;
-//        edges.forEach((Edge edge) -> {
-//            total = edge.from.merge(edge.to, total, edge.value);
-//            System.out.println("from= " + edge.from.id + " to= " + edge.to.id + " value= " + edge.value);
-//        });
 
         for(int i=0;i<M;i++) {
             Edge edge = edges.get(i);
