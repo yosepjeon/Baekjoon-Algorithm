@@ -1,4 +1,4 @@
-package 그래프이론.p10451순열사이클;
+package 그래프이론.일반.p10451순열사이클;
 
 import java.util.Scanner;
 

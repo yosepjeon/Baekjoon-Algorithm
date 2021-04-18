@@ -1,4 +1,4 @@
-package 그래프이론.p4963섬의개수;
+package 그래프이론.일반.p4963섬의개수;
 
 import java.util.Scanner;
 

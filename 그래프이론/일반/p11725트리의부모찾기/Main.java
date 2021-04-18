@@ -1,4 +1,4 @@
-package 그래프이론.p11725트리의부모찾기;
+package 그래프이론.일반.p11725트리의부모찾기;
 
 import java.util.ArrayList;
 import java.util.Iterator;

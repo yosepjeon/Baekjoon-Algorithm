@@ -1,4 +1,4 @@
-package 그래프이론.p6118숨바꼭질;
+package 그래프이론.일반.p6118숨바꼭질;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

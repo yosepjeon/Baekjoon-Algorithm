@@ -1,4 +1,4 @@
-package 그래프이론.p1507궁금한민호;
+package 그래프이론.일반.p1507궁금한민호;
 
 import java.util.Scanner;
 

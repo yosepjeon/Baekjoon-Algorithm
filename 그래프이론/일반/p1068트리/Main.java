@@ -1,4 +1,4 @@
-package 그래프이론.p1068트리;
+package 그래프이론.일반.p1068트리;
 
 import java.util.Scanner;
 
