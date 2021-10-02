@@ -40,7 +40,6 @@ public class Main {
             int count = 0;
             for(int i=0;i<aLen;i++) {
                 int findIdx = binarySearch(B,A[i]);
-//                System.out.println(A[i] + " : " +  findIdx);
                 if(findIdx >= 0)
                     count += (findIdx);
                 else {
