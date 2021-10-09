@@ -18,8 +18,8 @@ public class BinarySearch1 {
         int target = scr.nextInt();
 
         int binarySearchResult = binarySearch(0, N - 1, arr, target);
-        int lowerBoundBinarySearch = lowerBoundBinarySearch(0, N - 1, arr, target);
-        int uppderBoundBinarySearch = upperBoundBinarySearch(0, N-1, arr, target);
+        int lowerBoundBinarySearch = lowerBoundBinarySearch(0, N, arr, target);
+        int uppderBoundBinarySearch = upperBoundBinarySearch(0, N, arr, target);
 
         System.out.println("binary search result= " + binarySearchResult);
         System.out.println("lower bound result= " + lowerBoundBinarySearch);
@@ -48,39 +48,35 @@ public class BinarySearch1 {
     public static int lowerBoundBinarySearch(int left, int right, int[] arr, int target) {
         int mid = 0;
         Arrays.sort(arr);
-        int res = 0;
 
-        while (left <= right) {
+        while (left < right) {
             mid = (left + right) / 2;
 
             if (arr[mid] >= target) {
-                res = mid;
-                right = mid - 1;
+                right = mid;
             } else {
                 left = mid + 1;
             }
         }
 
-        return res;
+        return right;
     }
 
     public static int upperBoundBinarySearch(int left, int right, int[] arr, int target) {
         int mid = 0;
-        int res= 0;
         Arrays.sort(arr);
 
-        while (left <= right) {
+        while (left < right) {
             mid = (left + right) / 2;
 
             if(arr[mid] <= target) {
-                res = mid;
                 left = mid + 1;
             }else {
-                right = mid - 1;
+                right = mid;
             }
         }
 
-        return res;
+        return right;
     }
 }
 
