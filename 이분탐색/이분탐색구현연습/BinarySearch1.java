@@ -46,11 +46,10 @@ public class BinarySearch1 {
     }
 
     public static int lowerBoundBinarySearch(int left, int right, int[] arr, int target) {
-        int mid = 0;
         Arrays.sort(arr);
 
         while (left < right) {
-            mid = (left + right) / 2;
+            int mid = (left + right) / 2;
 
             if (arr[mid] >= target) {
                 right = mid;
@@ -63,11 +62,10 @@ public class BinarySearch1 {
     }
 
     public static int upperBoundBinarySearch(int left, int right, int[] arr, int target) {
-        int mid = 0;
         Arrays.sort(arr);
 
         while (left < right) {
-            mid = (left + right) / 2;
+            int mid = (left + right) / 2;
 
             if(arr[mid] <= target) {
                 left = mid + 1;

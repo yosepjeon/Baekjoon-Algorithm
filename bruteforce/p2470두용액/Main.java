@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         YoggaebReader input = new YoggaebReader();
+        StringBuilder sb = new StringBuilder();
 
         N = input.nextInt();
         int[] arr = new int[N];
@@ -20,47 +21,56 @@ public class Main {
         }
 
         Arrays.sort(arr);
-
         int min = Integer.MAX_VALUE;
-        int[] result = new int[2];
-        for (int i = 0; i < N; i++) {
-            int idx = binarySearch(arr, i + 1, N - 1, -arr[i]);
+        int v1 = 0, v2 = 0;
 
-            int abs = Math.abs(0 - Math.abs(arr[i] + arr[idx]));
+        // i<N이 아닌 i < N-1인 이유는 왼쪽을 뽑았을 때 오른쪽값은 왼쪽 + 1부터 시작함
+        // 하지만 왼쪽값이 N-1일 때 binarysearch를 하면 그대로 N-1반환하므로
+        // arr[N-1], arr[N-1]의 잘못된 값 반환
+        for (int i = 0; i < N - 1; i++) {
+            int idx = binarySearchLowerBound(i + 1, N - 1, arr, -arr[i]);
 
-            if (min > abs) {
-                min = abs;
-                result = new int[2];
-                result[0] = arr[i] > arr[idx] ? arr[idx] : arr[i];
-                result[1] = arr[i] < arr[idx] ? arr[idx] : arr[i];
+            int abs1 = Math.abs(arr[i] + arr[idx - 1]);
+            int abs2 = Math.abs(arr[i] + arr[idx]);
+
+            if (i < idx - 1 && abs1 < min) {
+//                System.out.println("##### ABS1 #####");
+                min = abs1;
+                v1 = arr[i];
+                v2 = arr[idx - 1];
+//                System.out.println(v1 + ", " + v2);
             }
+
+            if(idx < N && abs2 < min) {
+//                System.out.println("##### ABS2 #####");
+                min = abs2;
+                v1 = arr[i];
+                v2 = arr[idx];
+//                System.out.println(v1 + ", " + v2);
+            }
+
         }
 
-        System.out.println(result[0] + " " + result[1]);
+        sb.append(v1).append(" ").append(v2);
+        System.out.println(sb.toString());
     }
 
-    public static int binarySearch(int[] arr, int start, int end, int target) {
-        int mid;
+    public static int binarySearchLowerBound(int left, int right, int[] arr, int target) {
+        int result = right;
 
-        int result = end + 1;
-        while (start <= end) {
-            mid = (start + end) / 2;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
             if (arr[mid] >= target) {
                 result = mid;
-                end = mid - 1;
+                right = mid - 1;
             } else {
-                start = mid + 1;
+                left = mid + 1;
             }
         }
 
         return result;
-
     }
-//5
-//-5 -4 -3 -2 -1
-
-//    5
-//    -1 0 1 2 3
 
     static class YoggaebReader {
         BufferedReader br;
