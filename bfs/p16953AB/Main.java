@@ -4,21 +4,27 @@ import java.util.Scanner;
 
 public class Main {
     static boolean isGet = false;
+
     public static void main(String[] args) {
         Scanner scr = new Scanner(System.in);
-        int A = scr.nextInt();
-        int B = scr.nextInt();
+        long A = scr.nextInt();
+        long B = scr.nextInt();
 
         multiplyTwo(A, B, 1);
-        appendOne(A, B, 1);
-
-        if(!isGet) {
-            System.out.println(-1);
+        if (isGet) {
+            return;
         }
+        appendOne(A, B, 1);
+        if (isGet) {
+            return;
+        }
+
+        System.out.println(-1);
+
     }
 
-    public static void multiplyTwo(int value, int B, int count) {
-        if(isGet || value > B) {
+    public static void multiplyTwo(long value, long B, long count) {
+        if (isGet || value > B) {
             return;
         }
 
@@ -34,8 +40,8 @@ public class Main {
         appendOne(value, B, count + 1);
     }
 
-    public static void appendOne(int value, int B, int count) {
-        if(isGet || value > B) {
+    public static void appendOne(long value, long B, long count) {
+        if (isGet || value > B) {
             return;
         }
 
@@ -49,7 +55,7 @@ public class Main {
         sb.append(value);
         sb.append(1);
 
-        value = Integer.parseInt(sb.toString());
+        value = Long.parseLong(sb.toString());
         multiplyTwo(value, B, count + 1);
         appendOne(value, B, count + 1);
     }
